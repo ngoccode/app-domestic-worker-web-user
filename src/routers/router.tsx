@@ -4,7 +4,7 @@ import RegisterPage from 'modules/auth/register/presentation';
 import HomePage from 'modules/home/presentation';
 import UsersPage from 'modules/users/presentation';
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
-const login = true;
+const login = false;
 const WrapperRouter = () => {
   if (login) return <Navigate to={'/app-login'} replace />;
   return (
