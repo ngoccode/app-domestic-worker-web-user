@@ -1,9 +1,6 @@
 import { createContext } from 'react';
 
-type WrapperContextValue = {
-  menuKey: string;
-  onChangeMenu: (menu: string) => void;
-};
+type WrapperContextValue = {};
 
 const WrapperContext = createContext<WrapperContextValue | null>(null);
 

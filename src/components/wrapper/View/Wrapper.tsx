@@ -1,111 +1,90 @@
-import React, { memo, useEffect } from 'react';
-import { UploadOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
-import { Layout, Menu, MenuProps, Avatar, Dropdown, Breadcrumb } from 'antd';
-import { CaretDownOutlined } from '@ant-design/icons';
-import { useWrapperContext } from '../context';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-const { Sider, Content, Header } = Layout;
-
-const KEY_EMPTY = 'empty';
-
-const itemsMenu = [
-  {
-    key: KEY_EMPTY,
-    icon: <HomeOutlined />,
-    label: 'Trang chủ',
-  },
-  {
-    key: 'app-user',
-    icon: <UserOutlined />,
-    label: 'Quản lý người dùng',
-  },
-];
-
-const items: MenuProps['items'] = [];
-itemsMenu.forEach((item) => items.push(item));
-
-const itemAvatar: MenuProps['items'] = [
-  {
-    key: '1',
-    icon: <UserOutlined />,
-    label: 'Profile',
-  },
-
-  {
-    key: '3',
-    icon: <UploadOutlined />,
-    label: 'Logout',
-  },
-];
+import React, { memo } from 'react';
+import IconLogo from '../.././../assets/icons/logo.svg';
+import { Button } from 'antd';
+import Icon from 'components/Icon/Icon';
 
 const WrapperUI = ({ children }: { children: React.ReactNode }) => {
-  const { menuKey, onChangeMenu } = useWrapperContext();
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    onChangeMenu(location.pathname?.slice(1) || KEY_EMPTY);
-  }, [onChangeMenu, location]);
-
-  const onClickMenu = ({ key }: { key: string }) => {
-    onChangeMenu(key);
-    if (key === KEY_EMPTY) key = '';
-    navigate(`/${key}`);
-  };
-
-  const findBreadcrumb = () => {
-    const itemFound = itemsMenu.find((item) => item.key === menuKey);
-    if (itemFound?.key === KEY_EMPTY) return undefined;
-
-    return itemFound?.label ?? undefined;
-  };
-
   return (
-    <Layout className='h-screen'>
-      <Sider trigger={null}>
-        <div className='w-full h-10 bg-orange-500 mb-2' />
-        <Menu
-          theme='dark'
-          mode='inline'
-          selectedKeys={[menuKey]}
-          items={items}
-          onClick={onClickMenu}
-        />
-      </Sider>
-      <Layout>
-        <Header className='p-0 bg-white'>
-          <div className='flex justify-end h-full items-center px-4 gap-2'>
-            <Avatar size={40}>User</Avatar>
-            <div>
-              <Dropdown menu={{ items: itemAvatar }}>
-                <div className='flex items-center gap-1'>
-                  <span>Hướng</span>
-                  <CaretDownOutlined />
-                </div>
-              </Dropdown>
+    <div className='flex flex-col min-h-full'>
+      <div className='px-6 py-2 border-b border-solid'>
+        <div className='flex justify-between items-center'>
+          <div>
+            <img src={IconLogo} alt='' />
+          </div>
+          <div className='flex items-center gap-8'>
+            <div className='flex gap-8 items-center'>
+              <div>Trang chủ</div>
+              <div>Về chúng tôi</div>
+              <div>Gợi ý</div>
+              <div className='flex'>
+                Dịch vụ <Icon icon='keyboard_arrow_down' />
+              </div>
+              <div>Trở thành đối tác</div>
+            </div>
+            <div className='flex gap-2'>
+              <Button className='!rounded-full ' size='large'>
+                Đăng nhập
+              </Button>
+              <Button type='primary' size='large' className='!rounded-full'>
+                Đăng ký
+              </Button>
             </div>
           </div>
-        </Header>
-        <Breadcrumb className='p-4 pb-0'>
-          <Breadcrumb.Item
-            onClick={() => navigate('/')}
-            className='hover:underline cursor-pointer'
-          >
-            <div className='flex gap-1 items-center'>
-              <HomeOutlined />
-              Home
+        </div>
+      </div>
+      <div className='flex-1'>{children}</div>
+      <div className='flex border-t py-4'>
+        <div className='w-1/4 flex justify-center'>
+          <div>
+            <img className='w-[150%]' src={IconLogo} alt='' />
+          </div>
+        </div>
+        <div className='flex flex-1 gap-x-24'>
+          <div>
+            <div className='font-bold text-large mb-5'>Công ty</div>
+            <div className='flex flex-col gap-3'>
+              <div className='text-[#5E6282] cursor-pointer hover:text-[#FF5B22]'>
+                Về chúng tôi
+              </div>
+              <div className='text-[#5E6282] cursor-pointer hover:text-[#FF5B22]'>
+                Tuyển dụng
+              </div>
             </div>
-          </Breadcrumb.Item>
-          {findBreadcrumb() ? (
-            <Breadcrumb.Item>{findBreadcrumb()}</Breadcrumb.Item>
-          ) : null}
-        </Breadcrumb>
-        <Content className='p-4'>
-          <div className='bg-white rounded-sm w-full h-full'>{children}</div>
-        </Content>
-      </Layout>
-    </Layout>
+          </div>
+          <div>
+            <div className='font-bold text-large mb-5'>Dịch vụ</div>
+            <div className='flex flex-col gap-3'>
+              <div className='text-[#5E6282] cursor-pointer hover:text-[#FF5B22]'>
+                Giúp việc nhà
+              </div>
+              <div className='text-[#5E6282] cursor-pointer hover:text-[#FF5B22]'>
+                Giúp việc văn phòng
+              </div>
+              <div className='text-[#5E6282] cursor-pointer hover:text-[#FF5B22]'>
+                Chăm sóc trẻ em
+              </div>
+              <div className='text-[#5E6282] cursor-pointer hover:text-[#FF5B22]'>
+                Chăm sóc người già
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className='font-bold text-large mb-5'>Khác</div>
+            <div className='flex flex-col gap-3'>
+              <div className='text-[#5E6282] cursor-pointer hover:text-[#FF5B22]'>
+                Kinh nghiệm hay
+              </div>
+              <div className='text-[#5E6282] cursor-pointer hover:text-[#FF5B22]'>
+                Câu chuyện người giúp việc
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='flex justify-center'>
+        <span>© 2023 by ngoc.nguyenyen</span>
+      </div>
+    </div>
   );
 };
 

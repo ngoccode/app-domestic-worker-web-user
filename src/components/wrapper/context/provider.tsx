@@ -1,13 +1,8 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import WrapperContext from './context';
 
 const WrapperProvider = ({ children }: { children: ReactNode }) => {
-  const [menuKey, setMenuKey] = useState('empty');
-
-  const valueProvider = {
-    menuKey,
-    onChangeMenu: setMenuKey,
-  };
+  const valueProvider = {};
   return (
     <WrapperContext.Provider value={valueProvider}>
       {children}
