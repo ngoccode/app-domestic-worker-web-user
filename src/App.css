@@ -39,5 +39,5 @@
 
 /* remove css antd */
 .ant-form-item {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
