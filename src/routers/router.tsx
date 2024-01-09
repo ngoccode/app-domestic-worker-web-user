@@ -4,6 +4,7 @@ import RegisterPage from 'modules/auth/register/presentation';
 import HelperDetailPage from 'modules/helper_detail/presentation';
 import HelperListPage from 'modules/helper_list/presentation';
 import HomePage from 'modules/home/presentation';
+import RegisterHelperPage from 'modules/register_helper/presentation';
 import UsersPage from 'modules/users/presentation';
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 const login = false;
@@ -26,6 +27,7 @@ const RouterComponent = () => {
         <Route path='/app-user' element={<UsersPage />} />
         <Route path='/app-helper-list' element={<HelperListPage />} />
         <Route path='/app-helper-detail/:id' element={<HelperDetailPage />} />
+        <Route path='/app-helper-register' element={<RegisterHelperPage />} />
       </Route>
     </Routes>
   );

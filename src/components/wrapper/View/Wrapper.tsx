@@ -38,7 +38,7 @@ const WrapperUI = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
       </div>
-      <div className='flex-1 pt-[57px]'>{children}</div>
+      <div className='grow pt-[57px]'>{children}</div>
       <div className='flex border-t py-4'>
         <div className='w-1/4 flex justify-center'>
           <div>
