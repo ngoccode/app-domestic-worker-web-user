@@ -39,5 +39,13 @@
 
 /* remove css antd */
 .ant-form-item {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
+}
+
+.ant-rate {
+  font-size: 16px !important;
+}
+
+.ant-rate-star {
+  margin-inline-end: 6px !important;
 }
