@@ -1,4 +1,6 @@
 import { DatePicker, Form, Input, Select } from 'antd';
+import { CheckCircleOutlined } from '@ant-design/icons';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 const { Item } = Form;
 
@@ -21,6 +23,14 @@ const options = [
 ];
 
 const RegisterForm = () => {
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const onChangeInput = (callback: Dispatch<SetStateAction<string>>) => {
+    return (e: any) => {
+      callback(e.target.value);
+    };
+  };
   return (
     <div className='w-full'>
       <Form name='form-register'>
@@ -33,9 +43,9 @@ const RegisterForm = () => {
               </Item>
             </div>
             <div className='flex flex-col w-1/2 gap-1'>
-              <div className='font-medium'>Email</div>
+              <div className='font-medium'>Số điện thoại</div>
               <Item name='name'>
-                <Input size='large' />
+                <Input size='large' maxLength={20} minLength={10} />
               </Item>
             </div>
           </div>
@@ -84,14 +94,41 @@ const RegisterForm = () => {
           </div>
           <div className='flex flex-col gap-1'>
             <div className='font-medium'>Mật khẩu</div>
-            <Item name='password'>
-              <Input.Password size='large' />
+            <Item
+              name='password'
+              rules={[
+                {
+                  pattern:
+                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                  message:
+                    'Mật khẩu phải Tối thiểu tám ký tự, ít nhất một chữ cái, một số và một ký tự đặc biệt',
+                },
+              ]}
+            >
+              <Input.Password
+                size='large'
+                value={password}
+                onChange={onChangeInput(setPassword)}
+              />
             </Item>
           </div>
           <div className='flex flex-col gap-1'>
             <div className='font-medium'>Nhập lại mật khẩu</div>
             <Item name='confirmPassword'>
-              <Input.Password size='large' />
+              <Input.Password
+                size='large'
+                value={confirmPassword}
+                onChange={onChangeInput(setConfirmPassword)}
+                prefix={
+                  password && password === confirmPassword ? (
+                    <CheckCircleOutlined
+                      style={{
+                        color: '#4BB543',
+                      }}
+                    />
+                  ) : undefined
+                }
+              />
             </Item>
           </div>
         </div>
