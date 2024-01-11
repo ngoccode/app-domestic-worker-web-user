@@ -33,6 +33,7 @@ const LoginProvider = ({ children }: { children: ReactNode }) => {
       );
       setToken(response.token);
       setUser(response.user);
+      localStorage.setItem('refresh_token', response.refreshToken);
       navigate('/');
       notification.success({
         message: 'Đăng nhập thành công',

@@ -5,9 +5,9 @@ import { Button } from 'antd';
 const UI = () => {
   return (
     <Wrapper>
-      <div className='flex w-full justify-center py-24'>
+      <div className='flex w-full justify-center py-12'>
         <div className='w-2/3 bg-white rounded-xl shadow-xl'>
-          <div className='py-12 px-8'>
+          <div className='pb-8 pt-2 px-8'>
             <div className='uppercase font-bold text-2xl mb-6 text-[#F47458]'>
               Đăng ký
             </div>

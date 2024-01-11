@@ -11,7 +11,7 @@ const AuthService = {
     return token;
   },
   getRefreshToken: () => {
-    const token = JSON.parse(localStorage.getItem('token') || '{}');
+    const token = JSON.parse(localStorage.getItem('refresh_token') || '{}');
     return token;
   },
 };

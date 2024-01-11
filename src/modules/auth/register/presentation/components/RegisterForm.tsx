@@ -1,6 +1,8 @@
 import { DatePicker, Form, Input, Select } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { useRegisterContext } from '../context';
+import { useMapAddress } from '../hooks/useMapAddress';
 
 const { Item } = Form;
 
@@ -23,6 +25,9 @@ const options = [
 ];
 
 const RegisterForm = () => {
+  const { form, province, districts, wards, onChangeForm } =
+    useRegisterContext();
+  const { optionsAddress } = useMapAddress();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -33,7 +38,7 @@ const RegisterForm = () => {
   };
   return (
     <div className='w-full'>
-      <Form name='form-register'>
+      <Form name='form-register' form={form} onValuesChange={onChangeForm}>
         <div className='flex flex-col gap-4'>
           <div className='flex gap-12'>
             <div className='flex flex-col w-1/2 gap-1'>
@@ -66,28 +71,49 @@ const RegisterForm = () => {
           <div className='flex flex-col gap-1'>
             <div className='font-medium'>Nơi ở hiện tại</div>
             <div className='flex gap-3'>
-              <Item name={['address', 'province']} className='!w-1/3'>
+              <Item name={'province'} className='!w-1/3'>
                 <Select
-                  options={options}
+                  options={optionsAddress(province)}
                   placeholder='Tỉnh hoặc thành phố'
                   className='!w-full'
                   size='large'
+                  showSearch
+                  optionFilterProp='label'
+                  filterOption={(input, option) =>
+                    option?.label
+                      ?.toLowerCase()
+                      .indexOf(input?.trim().toLowerCase()) >= 0
+                  }
                 />
               </Item>
-              <Item name={['address', 'district']} className='!w-1/3'>
+              <Item name={'district'} className='!w-1/3'>
                 <Select
-                  options={options}
+                  options={optionsAddress(districts)}
                   placeholder='Huyện hoặc quận'
                   className='!w-full'
                   size='large'
+                  showSearch
+                  optionFilterProp='label'
+                  filterOption={(input, option) =>
+                    option?.label
+                      ?.toLowerCase()
+                      .indexOf(input?.trim().toLowerCase()) >= 0
+                  }
                 />
               </Item>
-              <Item name={['address', 'ward']} className='!w-1/3'>
+              <Item name={'ward'} className='!w-1/3'>
                 <Select
-                  options={options}
+                  options={optionsAddress(wards)}
                   placeholder='Xã phường'
                   className='!w-full'
                   size='large'
+                  showSearch
+                  optionFilterProp='label'
+                  filterOption={(input, option) =>
+                    option?.label
+                      ?.toLowerCase()
+                      .indexOf(input?.trim().toLowerCase()) >= 0
+                  }
                 />
               </Item>
             </div>
