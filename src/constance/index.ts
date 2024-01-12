@@ -1,3 +1,5 @@
 const AXIOS_TIMEOUT = 10000;
 
-export { AXIOS_TIMEOUT };
+const MESSAGE_ERROR = 'ERROR';
+
+export { AXIOS_TIMEOUT, MESSAGE_ERROR };

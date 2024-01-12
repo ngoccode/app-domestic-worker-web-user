@@ -4,15 +4,15 @@ import queryString from 'query-string';
 
 const AuthService = {
   getUserInfo: () => {
-    return JSON.parse(localStorage.getItem('user') || '{}');
+    return JSON.parse(localStorage.getItem('token') || '{}');
   },
   getAccessToken: () => {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user?.token;
+    const token = JSON.parse(localStorage.getItem('token') || '{}');
+    return token;
   },
   getRefreshToken: () => {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user?.refreshToken;
+    const token = JSON.parse(localStorage.getItem('refresh_token') || '{}');
+    return token;
   },
 };
 
@@ -46,7 +46,7 @@ axiosConfig.interceptors.response.use(
   function (error) {
     const originalRequest = error.config;
     if (error.response.status === 401 && originalRequest.url === '') {
-      window.location.replace(window.location.hostname + '/auth/login');
+      window.location.replace(window.location.hostname + '/app-login');
       return Promise.reject(error);
     } else if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
