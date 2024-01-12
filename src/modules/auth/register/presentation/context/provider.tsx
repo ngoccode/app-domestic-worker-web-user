@@ -2,7 +2,11 @@ import { ReactNode, useState } from 'react';
 import RegisterContext from './context';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { Form } from 'antd';
+import { Form, notification } from 'antd';
+import { RegisterApi } from '../../data/api';
+import { MESSAGE_ERROR } from 'constance';
+import { RegisterPayload } from '../../model';
+import { useNavigate } from 'react-router-dom';
 
 type Districts = {
   Id: string;
@@ -18,11 +22,14 @@ type Wards = {
   Name: string;
 }[];
 
+const api = new RegisterApi();
+
 const RegisterProvider = ({ children }: { children: ReactNode }) => {
   const [form] = Form.useForm();
   const { address } = useSelector((state: RootState) => state.wrapper);
   const [districts, setDistricts] = useState<Districts>([]);
   const [wards, setWards] = useState<Wards>([]);
+  const navigate = useNavigate();
 
   const onChangeForm = (value: any) => {
     if (value.province) {
@@ -37,7 +44,7 @@ const RegisterProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const onSubmitForm = (value: {
+  const onSubmitForm = async (value: {
     name: string;
     phoneNumber: string;
     dateOfBirth: Date;
@@ -48,7 +55,28 @@ const RegisterProvider = ({ children }: { children: ReactNode }) => {
     password: string;
     confirmPassword: string;
   }) => {
-    console.log(value);
+    try {
+      await api.register(
+        new RegisterPayload({
+          fullName: value.name,
+          phoneNumber: value.phoneNumber,
+          dateOfBirth: value.dateOfBirth,
+          gender: value.gender,
+          province: value.province,
+          district: value.district,
+          ward: value.district,
+          password: value.password,
+        })
+      );
+      notification.success({
+        message: 'Đăng ký thành công thành công',
+      });
+      navigate('/app-login');
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data?.error ?? MESSAGE_ERROR,
+      });
+    }
   };
 
   const value = {

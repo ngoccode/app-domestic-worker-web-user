@@ -53,7 +53,7 @@ const RegisterForm = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Vui lòng nhập họ và tên',
+                    message: 'Vui lòng nhập họ và tên!',
                   },
                 ]}
               >
@@ -67,7 +67,7 @@ const RegisterForm = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Vui lòng nhập số điện thoại',
+                    message: 'Vui lòng nhập số điện thoại!',
                   },
                 ]}
               >
@@ -78,8 +78,16 @@ const RegisterForm = () => {
           <div className='flex gap-12'>
             <div className='flex flex-col w-1/2 gap-1'>
               <div className='font-medium'>Ngày sinh</div>
-              <Item name='dateOfBirth'>
-                <DatePicker size='large' className='!w-full' />
+              <Item
+                name='dateOfBirth'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng điền ngày sinh!',
+                  },
+                ]}
+              >
+                <DatePicker size='large' className='!w-full' placeholder='' />
               </Item>
             </div>
             <div className='flex flex-col w-1/2 gap-1'>
