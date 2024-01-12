@@ -1,26 +1,34 @@
 class RegisterPayload {
   full_name: string;
   phone_number: string;
-  date_of_birth: string;
-  address: string;
+  date_of_birth: Date | null;
+  province: string;
+  district: string;
+  ward: string;
   password: string;
   constructor({
     fullName = '',
     phoneNumber = '',
-    dateOfBirth = '',
-    address = '',
+    dateOfBirth = null,
+    province = '',
+    district = '',
+    ward = '',
     password = '',
   }: {
     fullName: string;
     phoneNumber: string;
-    dateOfBirth: string;
-    address: string;
+    dateOfBirth: Date | null;
+    province: string;
+    district: string;
+    ward: string;
     password: string;
   }) {
     this.full_name = fullName;
     this.phone_number = phoneNumber;
     this.date_of_birth = dateOfBirth;
-    this.address = address;
+    this.province = province;
+    this.district = district;
+    this.ward = ward;
     this.password = password;
   }
 }

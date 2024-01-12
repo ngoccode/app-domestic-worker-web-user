@@ -1,4 +1,4 @@
-import { DatePicker, Form, Input, Select } from 'antd';
+import { Button, DatePicker, Form, Input, Select } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useRegisterContext } from '../context';
@@ -25,7 +25,7 @@ const options = [
 ];
 
 const RegisterForm = () => {
-  const { form, province, districts, wards, onChangeForm } =
+  const { form, province, districts, wards, onChangeForm, onSubmitForm } =
     useRegisterContext();
   const { optionsAddress } = useMapAddress();
   const [password, setPassword] = useState('');
@@ -38,18 +38,39 @@ const RegisterForm = () => {
   };
   return (
     <div className='w-full'>
-      <Form name='form-register' form={form} onValuesChange={onChangeForm}>
+      <Form
+        name='form-register'
+        form={form}
+        onValuesChange={onChangeForm}
+        onFinish={onSubmitForm}
+      >
         <div className='flex flex-col gap-4'>
           <div className='flex gap-12'>
             <div className='flex flex-col w-1/2 gap-1'>
               <div className='font-medium'>Họ và tên</div>
-              <Item name='name'>
+              <Item
+                name='name'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập họ và tên',
+                  },
+                ]}
+              >
                 <Input size='large' />
               </Item>
             </div>
             <div className='flex flex-col w-1/2 gap-1'>
               <div className='font-medium'>Số điện thoại</div>
-              <Item name='name'>
+              <Item
+                name='phoneNumber'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập số điện thoại',
+                  },
+                ]}
+              >
                 <Input size='large' maxLength={20} minLength={10} />
               </Item>
             </div>
@@ -57,7 +78,7 @@ const RegisterForm = () => {
           <div className='flex gap-12'>
             <div className='flex flex-col w-1/2 gap-1'>
               <div className='font-medium'>Ngày sinh</div>
-              <Item name='date'>
+              <Item name='dateOfBirth'>
                 <DatePicker size='large' className='!w-full' />
               </Item>
             </div>
@@ -124,6 +145,10 @@ const RegisterForm = () => {
               name='password'
               rules={[
                 {
+                  required: true,
+                  message: 'Vui lòng nhập mật khẩu',
+                },
+                {
                   pattern:
                     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
                   message:
@@ -140,7 +165,25 @@ const RegisterForm = () => {
           </div>
           <div className='flex flex-col gap-1'>
             <div className='font-medium'>Nhập lại mật khẩu</div>
-            <Item name='confirmPassword'>
+            <Item
+              name='confirmPassword'
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập lại mật khẩu',
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error('Nhập lại mật khẩu chưa chính xác!')
+                    );
+                  },
+                }),
+              ]}
+            >
               <Input.Password
                 size='large'
                 value={confirmPassword}
@@ -156,6 +199,16 @@ const RegisterForm = () => {
                 }
               />
             </Item>
+          </div>
+          <div className='flex justify-center py-12'>
+            <Button
+              className='!rounded-full w-[180px]'
+              size='large'
+              type='primary'
+              htmlType='submit'
+            >
+              Đăng ký
+            </Button>
           </div>
         </div>
       </Form>

@@ -23,6 +23,7 @@ type RegisterContextValue = {
   wards: { Id: string; Name: string }[];
 
   onChangeForm: (value: any) => void;
+  onSubmitForm(value: any): void;
 };
 
 const RegisterContext = createContext<RegisterContextValue | null>(null);

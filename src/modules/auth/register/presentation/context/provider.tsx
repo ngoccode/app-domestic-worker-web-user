@@ -37,6 +37,20 @@ const RegisterProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const onSubmitForm = (value: {
+    name: string;
+    phoneNumber: string;
+    dateOfBirth: Date;
+    gender: string;
+    province: string;
+    district: string;
+    ward: string;
+    password: string;
+    confirmPassword: string;
+  }) => {
+    console.log(value);
+  };
+
   const value = {
     form,
     province: address,
@@ -44,6 +58,7 @@ const RegisterProvider = ({ children }: { children: ReactNode }) => {
     wards,
 
     onChangeForm,
+    onSubmitForm,
   };
   return (
     <RegisterContext.Provider value={value}>

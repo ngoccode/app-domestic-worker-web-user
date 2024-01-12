@@ -1,6 +1,5 @@
 import Wrapper from 'components/wrapper';
 import RegisterForm from '../components/RegisterForm';
-import { Button } from 'antd';
 
 const UI = () => {
   return (
@@ -12,14 +11,7 @@ const UI = () => {
               Đăng ký
             </div>
             <RegisterForm />
-            <div className='mt-24 flex items-center flex-col gap-12'>
-              <Button
-                className='!rounded-full w-[180px]'
-                size='large'
-                type='primary'
-              >
-                Đăng ký
-              </Button>
+            <div className='flex items-center flex-col gap-12'>
               <div className='text-[#00000033]'>
                 Bạn đã có tài khoản?{' '}
                 <span className='text-[#F47458] cursor-pointer hover:underline'>
