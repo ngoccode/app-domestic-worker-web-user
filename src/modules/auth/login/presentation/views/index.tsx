@@ -1,20 +1,18 @@
-import { Button, Checkbox, Form, Input, Spin } from 'antd';
+import { Button, Form, Input } from 'antd';
 import LoginImg from '../../../../../assets/icons/login-img.svg';
 import { useLoginContext } from '../context';
 import { useNavigate } from 'react-router-dom';
-import { useGetToken } from 'config/hooks/useGetToken';
-import { useEffect } from 'react';
 
 const { Item } = Form;
 
 const UI = () => {
   const { form, onConfirmLogin } = useLoginContext();
   const navigate = useNavigate();
-  const { token } = useGetToken();
+  // const { token } = useGetToken();
 
-  useEffect(() => {
-    if (token) navigate('/');
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) navigate('/');
+  // }, [token]);
 
   const onChangeRegister = () => {
     navigate('/app-register');
