@@ -2,11 +2,23 @@ import { Avatar, Button, Rate } from 'antd';
 import Icon from 'components/Icon/Icon';
 import ModalContract from '../components/ModalContract';
 import Comment from './Comment';
+import { useHelperDetailContext } from '../context';
+import { BASE_IMG } from 'constance';
+import { useAddress } from 'hooks/address';
+import dayjs from 'dayjs';
 
 const UI = () => {
+  const { detail, open, onOpen } = useHelperDetailContext();
+  const { getDistrict, getProvince, getWard } = useAddress();
+
+  const getLinkImage = (url: string) => {
+    if (!url) return '';
+    return `${process.env.REACT_APP_BASE_URL}/image/${url}`;
+  };
+
   return (
     <>
-      <ModalContract open={true} />
+      <ModalContract />
       <div className='flex justify-center'>
         <div className='w-2/3 py-8 flex flex-col gap-4'>
           <div className='flex items-center justify-between'>
@@ -14,37 +26,49 @@ const UI = () => {
               <div className='mb-[-4px] cursor-pointer hover:opacity-80'>
                 <Icon icon='keyboard_arrow_left' color='#1E3050' size='large' />
               </div>
-              <div className='font-medium text-2xl'>Nguyễn Thị A</div>
+              <div className='font-medium text-2xl uppercase'>
+                {detail?.full_name ?? ''}
+              </div>
             </div>
-            <Button className='!rounded-full !px-6' type='primary' size='large'>
-              Tạo hợp đồng
-            </Button>
+            {detail?.contract ? null : (
+              <Button
+                className='!rounded-full !px-6'
+                type='primary'
+                size='large'
+                onClick={onOpen}
+              >
+                Tạo hợp đồng
+              </Button>
+            )}
           </div>
           <div className='flex gap-12 items-center'>
             <div>
               <img
-                src='https://s3-alpha-sig.figma.com/img/1e17/de58/1a0680a4680d65bbfd00cd6a08be4f26?Expires=1705881600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Kk3SHojDEX4p9Fk7PtWUE2-ECjKTHOo-9LhwhpDKrXVv3HyeaeKonxRuk6pBwkMAcle-YXklvys4pej7MHfQLwDwzTfK2NKioWxyloZ6kkSOS9fUGRWG1VL18Re0es40PNUGHPsb29BJLCjT8Lut81r--4rSxaFe68yDKqOomdSMHroO21jKrwIhbQHU1JMXnfoeAfoVcV2mluHSHLWDLaA6nAIe9SubUnE-uVtwRsjrGpoOrXp6VIBKbRS1SosF~pmaTF2BBPptJXkZj6kF~ujEVZzAphYGLUG7SVcNX4rNUelgeYaAs--i9oxskHtSA-z~fvB83PBU0bAIJyl43g__'
+                src={getLinkImage(detail?.profile_picture) ?? BASE_IMG}
                 alt=''
                 className='w-[224px] h-[224px] object-cover rounded-xl'
               />
             </div>
             <ul className='list-disc ps-6 text-lg flex flex-col gap-2'>
               <li>
-                <span className='font-medium'>Quê quán:</span> Hưng Yên
+                <span className='font-medium'>Quê quán:</span>{' '}
+                {`${getWard(detail?.ward)?.Name ?? ''}-${
+                  getDistrict(detail?.district)?.Name ?? ''
+                }-${getProvince(detail?.province)?.Name ?? ''}`}
               </li>
               <li>
-                <span className='font-medium'>Năm sinh:</span> 1980
+                <span className='font-medium'>Năm sinh:</span>{' '}
+                {detail?.date_of_birth
+                  ? dayjs(detail?.date_of_birth).format('YYYY')
+                  : ''}
               </li>
               <li>
-                <span className='font-medium'>Kinh nghiệm:</span> Chăm bé, chăm
-                bà, Dọn dẹp nhà cửa, Nấu cơm
+                <span className='font-medium'>Kinh nghiệm:</span>{' '}
+                {detail?.categories?.map((ele: any) => ele.name)?.join(', ')}
               </li>
               <li>
-                <span className='font-medium'>Thời gian:</span> 7 năm
-              </li>
-              <li>
-                <span className='font-medium'>Nơi làm việc mong muốn:</span> Nam
-                Từ Liêm, Hà Nội
+                <span className='font-medium'>Thời gian làm việc:</span>{' '}
+                {detail?.profile?.experience} năm
               </li>
             </ul>
           </div>
@@ -53,9 +77,7 @@ const UI = () => {
             <div className='flex flex-col gap-4'>
               <div className='text-[#5E6282] font-medium text-lg'>Ưu điểm</div>
               <ul className='list-disc ps-6 flex flex-col gap-1'>
-                <li>Nhanh nhẹn, hoạt bát, sạch sẽ, chăm chỉ</li>
-                <li>Có kinh nghiệm làm việc lâu năm</li>
-                <li>Đảm nhận được nhiều việc trong nhà</li>
+                <li>{detail?.profile?.advantage}</li>
               </ul>
             </div>
             <div className='flex flex-col gap-4'>
@@ -63,21 +85,21 @@ const UI = () => {
                 Nhược điểm
               </div>
               <ul className='list-disc ps-6 flex flex-col gap-1'>
-                <li>Chỉ làm việc ở Hà Nội</li>
+                <li>{detail?.profile?.defect}</li>
               </ul>
             </div>
             <div className='flex flex-col gap-4'>
               <div className='text-[#5E6282] font-medium text-lg'>Tiểu sử</div>
-              <div className='pl-2'>
-                Là người quê Hưng Yên đang sinh sống và làm việc tại Hà Nội Gia
-                đình có chồng làm bảo vệ, 2 đứa con đang đi làm tại Hà Nội
-              </div>
+              <div className='pl-2'>{detail?.profile?.biography}</div>
             </div>
             <div className='flex flex-col gap-4'>
               <div className='text-[#5E6282] font-medium text-lg'>
                 Kinh nghiệm làm việc
               </div>
-              <ol className='list-decimal ps-6 flex flex-col gap-2'>
+              <ul className='list-disc ps-6 flex flex-col gap-1'>
+                <li>{detail?.profile?.detail_experience}</li>
+              </ul>
+              {/* <ol className='list-decimal ps-6 flex flex-col gap-2'>
                 <li>
                   <div className='font-medium'>
                     Đã từng làm giúp việc toàn thời gian cho một gia đình, công
@@ -102,9 +124,9 @@ const UI = () => {
                     <li>Đưa đón trẻ đến trường</li>
                   </ul>
                 </li>
-              </ol>
+              </ol> */}
             </div>
-            <Comment />
+            <Comment comment={detail?.review} />
           </div>
         </div>
       </div>
