@@ -49,3 +49,7 @@
 .ant-rate-star {
   margin-inline-end: 6px !important;
 }
+
+.ant-app {
+  height: 100%;
+}

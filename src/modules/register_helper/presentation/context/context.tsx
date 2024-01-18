@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-type RegisterHelperContextValue = {};
+type RegisterHelperContextValue = any;
 const RegisterHelperContext = createContext<RegisterHelperContextValue | null>(
   null
 );
