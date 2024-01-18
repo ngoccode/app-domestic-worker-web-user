@@ -3,6 +3,10 @@ const useGetUser = () => {
   const setUser = (value: any) => {
     localStorage.setItem('user', JSON.stringify(value));
   };
-  return { user, setUser };
+
+  const removeUser = () => {
+    localStorage.removeItem('user');
+  };
+  return { user, setUser, removeUser };
 };
 export { useGetUser };

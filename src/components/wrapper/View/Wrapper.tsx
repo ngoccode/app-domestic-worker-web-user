@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from 'react';
 import IconLogo from '../.././../assets/icons/logo.svg';
-import { Button } from 'antd';
+import { Button, Dropdown, MenuProps } from 'antd';
 import Icon from 'components/Icon/Icon';
 import Spinner from 'components/Spinner/Spinner';
 import { RootState } from 'store';
@@ -9,12 +9,21 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useGetToken } from 'config/hooks/useGetToken';
 import { Location } from 'constance/location';
 import { combineClass } from 'utils/class-name';
+import { useGetUser } from 'config/hooks/useGetUser';
+import {
+  CaretDownOutlined,
+  UserOutlined,
+  UploadOutlined,
+} from '@ant-design/icons';
+import { useWrapperContext } from '../context';
 
 const WrapperUI = ({ children }: { children: React.ReactNode }) => {
   const { loading } = useSelector((state: RootState) => state.wrapper);
   const { token } = useGetToken();
+  const { user } = useGetUser();
   const location = useLocation();
   const navigate = useNavigate();
+  const { onLogout } = useWrapperContext();
 
   const onChangePage = (link: string) => {
     return () => {
@@ -27,6 +36,21 @@ const WrapperUI = ({ children }: { children: React.ReactNode }) => {
 
     return undefined;
   };
+
+  const itemAvatar: MenuProps['items'] = [
+    {
+      key: '1',
+      icon: <UserOutlined />,
+      label: 'Profile',
+    },
+
+    {
+      key: '3',
+      icon: <UploadOutlined />,
+      label: 'Logout',
+      onClick: onLogout,
+    },
+  ];
 
   const headerRight = useMemo(() => {
     if (!token)
@@ -53,6 +77,15 @@ const WrapperUI = ({ children }: { children: React.ReactNode }) => {
           )}
         </div>
       );
+
+    return (
+      <Dropdown menu={{ items: itemAvatar }}>
+        <div className='flex items-center gap-1'>
+          <span>{user?.full_name ?? 'User'}</span>
+          <CaretDownOutlined />
+        </div>
+      </Dropdown>
+    );
   }, [token, location]);
 
   return (

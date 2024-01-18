@@ -4,14 +4,14 @@ import queryString from 'query-string';
 
 const AuthService = {
   getUserInfo: () => {
-    return JSON.parse(localStorage.getItem('token') || '{}');
+    return JSON.parse(localStorage.getItem('user') || '{}');
   },
   getAccessToken: () => {
-    const token = JSON.parse(localStorage.getItem('token') || '{}');
+    const token = localStorage.getItem('token');
     return token;
   },
   getRefreshToken: () => {
-    const token = JSON.parse(localStorage.getItem('refresh_token') || '{}');
+    const token = localStorage.getItem('refresh_token');
     return token;
   },
 };
@@ -52,12 +52,12 @@ axiosConfig.interceptors.response.use(
       originalRequest._retry = true;
       const refreshToken = AuthService.getRefreshToken();
       return axios
-        .post('/auth/refresh', {
+        .post(`${process.env.REACT_APP_BASE_URL}/auth/refresh`, {
           refresh_token: refreshToken,
         })
         .then((response) => {
           if (response.status === 200) {
-            localStorage.setItem('user', response.data.results);
+            localStorage.setItem('token', response.data.results);
             axios.defaults.headers.common['Authorization'] =
               'Bearer ' + AuthService.getAccessToken();
             return axios(originalRequest);

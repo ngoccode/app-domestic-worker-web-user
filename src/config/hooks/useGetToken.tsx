@@ -3,6 +3,10 @@ const useGetToken = () => {
   const setToken = (value: string) => {
     localStorage.setItem('token', value);
   };
-  return { token, setToken };
+  const removeToken = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refresh_token');
+  };
+  return { token, setToken, removeToken };
 };
 export { useGetToken };

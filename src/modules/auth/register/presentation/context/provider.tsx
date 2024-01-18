@@ -2,7 +2,7 @@ import { ReactNode, useState } from 'react';
 import RegisterContext from './context';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { Form, notification } from 'antd';
+import { App, Form } from 'antd';
 import { RegisterApi } from '../../data/api';
 import { MESSAGE_ERROR } from 'constance';
 import { RegisterPayload } from '../../model';
@@ -25,6 +25,7 @@ type Wards = {
 const api = new RegisterApi();
 
 const RegisterProvider = ({ children }: { children: ReactNode }) => {
+  const { notification } = App.useApp();
   const [form] = Form.useForm();
   const { address } = useSelector((state: RootState) => state.wrapper);
   const [districts, setDistricts] = useState<Districts>([]);

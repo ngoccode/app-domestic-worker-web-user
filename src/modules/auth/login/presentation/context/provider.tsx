@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Form, notification } from 'antd';
+import { App, Form } from 'antd';
 import LoginContext from './context';
 import { useDispatch } from 'react-redux';
 import { changeLoading } from 'components/wrapper/slice';
@@ -11,6 +11,7 @@ import { useGetToken } from 'config/hooks/useGetToken';
 import { useGetUser } from 'config/hooks/useGetUser';
 
 const LoginProvider = ({ children }: { children: ReactNode }) => {
+  const { notification } = App.useApp();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const api = new LoginApi();

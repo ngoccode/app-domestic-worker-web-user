@@ -21,7 +21,7 @@ class LoginResponse {
   user: any;
   constructor(data: AxiosResponse) {
     this.token = data.data?.results?.token ?? '';
-    this.refreshToken = data.data?.results?.refreshToken ?? '';
+    this.refreshToken = data.data?.results?.refresh_token ?? '';
     this.user = data.data?.results?.user ?? null;
   }
 }
