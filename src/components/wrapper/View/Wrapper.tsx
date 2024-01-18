@@ -1,7 +1,6 @@
 import React, { memo, useMemo } from 'react';
 import IconLogo from '../.././../assets/icons/logo.svg';
 import { Button, Dropdown, MenuProps } from 'antd';
-import Icon from 'components/Icon/Icon';
 import Spinner from 'components/Spinner/Spinner';
 import { RootState } from 'store';
 import { useSelector } from 'react-redux';
@@ -14,6 +13,7 @@ import {
   CaretDownOutlined,
   UserOutlined,
   UploadOutlined,
+  FileTextOutlined,
 } from '@ant-design/icons';
 import { useWrapperContext } from '../context';
 
@@ -43,11 +43,17 @@ const WrapperUI = ({ children }: { children: React.ReactNode }) => {
       icon: <UserOutlined />,
       label: 'Profile',
     },
+    {
+      key: '1',
+      icon: <FileTextOutlined />,
+      label: 'Hợp đồng',
+      onClick: () => navigate('/app-contract'),
+    },
 
     {
       key: '3',
       icon: <UploadOutlined />,
-      label: 'Logout',
+      label: 'Đăng xuất',
       onClick: onLogout,
     },
   ];
@@ -135,7 +141,7 @@ const WrapperUI = ({ children }: { children: React.ReactNode }) => {
                   )}
                   onClick={onChangePage(Location.service)}
                 >
-                  Dịch vụ <Icon icon='keyboard_arrow_down' />
+                  Dịch vụ
                 </div>
                 <div
                   className={combineClass(

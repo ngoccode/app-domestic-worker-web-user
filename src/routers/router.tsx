@@ -1,6 +1,7 @@
 import Wrapper from 'components/wrapper';
 import LoginPage from 'modules/auth/login/presentation';
 import RegisterPage from 'modules/auth/register/presentation';
+import ContractPage from 'modules/contract/presentation';
 import HelperDetailPage from 'modules/helper_detail/presentation';
 import HelperListPage from 'modules/helper_list/presentation';
 import HomePage from 'modules/home/presentation';
@@ -26,6 +27,7 @@ const RouterComponent = () => {
         <Route path='/app-helper-list' element={<HelperListPage />} />
         <Route path='/app-helper-detail/:id' element={<HelperDetailPage />} />
         <Route path='/app-helper-register' element={<RegisterHelperPage />} />
+        <Route path='/app-contract' element={<ContractPage />} />
       </Route>
     </Routes>
   );

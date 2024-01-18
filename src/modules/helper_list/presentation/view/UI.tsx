@@ -20,6 +20,13 @@ const UI = () => {
   const onClickDetail = (row: any) => {
     return () => navigate(`/app-helper-detail/${row.user_id}`);
   };
+
+  const countRate = (arr: any[]) => {
+    if (!arr) return 0;
+    return arr.reduce((acc, cur) => {
+      return acc + cur.rating;
+    }, 0);
+  };
   return (
     <div className='py-8 flex justify-center'>
       <div className='flex flex-col gap-5 w-2/3'>
@@ -62,8 +69,16 @@ const UI = () => {
                       </li>
                     </ul>
                     <div className='flex items-center justify-between mt-2'>
-                      <Rate value={4} />
-                      <div className='text-xs'>55 lượt đánh giá</div>
+                      {item?.review?.length > 0 ? (
+                        <>
+                          <Rate value={countRate(item?.review)} />
+                          <div className='text-xs'>
+                            {item?.review?.length} lượt đánh giá
+                          </div>
+                        </>
+                      ) : (
+                        <div className='text-xs'>Chưa có đánh giá</div>
+                      )}
                     </div>
                   </div>
                 );
