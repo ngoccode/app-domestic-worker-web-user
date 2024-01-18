@@ -8,5 +8,7 @@ type HelperListContextValue = {
   };
   onChangePagination(page: number, size: number): void;
 };
-const HelperListContext = createContext<HelperListContextValue | null>(null);
+const HelperListContext = createContext<HelperListContextValue | null | any>(
+  null
+);
 export default HelperListContext;

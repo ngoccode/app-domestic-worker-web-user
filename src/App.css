@@ -53,3 +53,12 @@
 .ant-app {
   height: 100%;
 }
+
+.slick-dots li button {
+  background-color: #ccc !important;
+  height: 8px !important;
+}
+
+.slick-dots {
+  bottom: -20px !important;
+}

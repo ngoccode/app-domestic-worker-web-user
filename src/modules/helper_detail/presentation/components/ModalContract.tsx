@@ -15,7 +15,6 @@ const options = [
 
 const ModalContract = ({ open = false }: ModalContractProps) => {
   const onCancel = () => {
-    console.log('click');
     open = false;
   };
   return (

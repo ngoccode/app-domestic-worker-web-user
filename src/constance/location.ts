@@ -6,7 +6,7 @@ enum Location {
   suggest = '/app-suggest',
   service = '/app-service',
   helper = '/app-helper-list',
-  partner = '/app-partner',
+  partner = '/app-helper-register',
 }
 
 export { Location };
