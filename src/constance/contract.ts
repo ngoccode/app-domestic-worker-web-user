@@ -4,6 +4,7 @@ const CONTRACT_STATUS: any = {
   'user-submit': 'Giúp việc xác nhận',
   completed: 'Hoàn thành',
   canceled: 'Hủy ',
+  rejected: 'Từ chối',
 };
 
 const CONTRACT_STATUS_OPTION = [
@@ -26,6 +27,10 @@ const CONTRACT_STATUS_OPTION = [
   {
     value: 'canceled',
     label: 'Hủy',
+  },
+  {
+    value: 'rejected',
+    label: 'Từ chối',
   },
 ];
 

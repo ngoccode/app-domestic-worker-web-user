@@ -90,6 +90,14 @@ const UI = () => {
       },
     },
     {
+      title: 'Ngày kết thúc hợp đồng',
+      key: 'date_of_birth',
+      width: 150,
+      render(row) {
+        return row?.time_end ? dayjs(row?.time_end).format('YYYY-MM-DD') : '-';
+      },
+    },
+    {
       title: 'Trạng thái',
       key: 'contract_status',
       dataIndex: 'contract_status',
