@@ -46,6 +46,10 @@
   font-size: 16px !important;
 }
 
+.ant-rate.size-large {
+  font-size: 32px !important;
+}
+
 .ant-rate-star {
   margin-inline-end: 6px !important;
 }

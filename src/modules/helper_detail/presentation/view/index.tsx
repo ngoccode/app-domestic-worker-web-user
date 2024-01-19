@@ -44,7 +44,7 @@ const UI = () => {
           <div className='flex gap-12 items-center'>
             <div>
               <img
-                src={getLinkImage(detail?.profile_picture) ?? BASE_IMG}
+                src={getLinkImage(detail?.profile_picture) || BASE_IMG}
                 alt=''
                 className='w-[224px] h-[224px] object-cover rounded-xl'
               />

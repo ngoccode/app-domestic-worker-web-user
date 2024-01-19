@@ -5,6 +5,7 @@ import { useAddress } from 'hooks/address';
 import dayjs from 'dayjs';
 import { CONTRACT_STATUS, CONTRACT_STATUS_OPTION } from 'constance/contract';
 import { useContractContext } from '../context';
+import { useNavigate } from 'react-router-dom';
 
 const { Item } = Form;
 
@@ -21,6 +22,7 @@ const OPTION_WORKING = [
 
 const UI = () => {
   const { getDistrict, getProvince, getWard } = useAddress();
+  const navigate = useNavigate();
   const {
     form,
     contract,
@@ -196,6 +198,14 @@ const UI = () => {
           rowSelection={{
             selectedRowKeys: selectedRow,
             onChange: onSelectTable,
+          }}
+          onRow={(record) => {
+            return {
+              className: 'cursor-pointer',
+              onClick: (event) => {
+                navigate(`/app-contract-detail/${record.contract_id}`);
+              },
+            };
           }}
           pagination={{
             current: pagination.page,

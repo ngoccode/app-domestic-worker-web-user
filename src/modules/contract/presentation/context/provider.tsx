@@ -6,10 +6,12 @@ import { App, Form } from 'antd';
 import { MESSAGE_ERROR } from 'constance';
 import { ContractApi } from 'modules/contract/data';
 import { ExclamationCircleFilled } from '@ant-design/icons';
+import { useGetUser } from 'config/hooks/useGetUser';
 
 const api = new ContractApi();
 
 const ContractProvider = ({ children }: { children: ReactNode }) => {
+  const { user } = useGetUser();
   const dispatch = useDispatch();
   const { notification, modal } = App.useApp();
   const [pagination, setPagination] = useState({
@@ -40,6 +42,7 @@ const ContractProvider = ({ children }: { children: ReactNode }) => {
           to: filter.to,
           working_form: filter.working_form,
           status: filter.status,
+          user_id: user?.user_id,
         });
         setContract(
           response.results?.map((value: any) => ({

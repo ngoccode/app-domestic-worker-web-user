@@ -25,7 +25,7 @@ for (let i = 0; i <= 50; i = i + 0.5) {
 }
 
 const Filter = () => {
-  const { province, district, ward, options, onChangeFilter, onFilter } =
+  const { province, districts, wards, options, onChangeFilter, onFilter } =
     useHelperListContext();
   const { optionsAddress } = useMapAddress();
   return (
@@ -52,7 +52,7 @@ const Filter = () => {
               </Item>
               <Item name='district' className='!w-1/3'>
                 <Select
-                  options={optionsAddress(district)}
+                  options={optionsAddress(districts)}
                   placeholder='Huyện hoặc quận'
                   className='!w-full'
                   size='large'
@@ -60,7 +60,7 @@ const Filter = () => {
               </Item>
               <Item name='ward' className='!w-1/3'>
                 <Select
-                  options={optionsAddress(ward)}
+                  options={optionsAddress(wards)}
                   placeholder='Xã phường'
                   className='!w-full'
                   size='large'
