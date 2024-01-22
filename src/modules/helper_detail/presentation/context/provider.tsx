@@ -1,19 +1,21 @@
 import { ReactNode, useEffect, useState } from 'react';
 import HelperDetailContext from './context';
 import { HelperDetailApi } from 'modules/helper_detail/data';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { App } from 'antd';
 import { MESSAGE_ERROR } from 'constance';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeLoading } from 'components/wrapper/slice';
 import { RootState } from 'store';
 import { useGetUser } from 'config/hooks/useGetUser';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 const api = new HelperDetailApi();
 
 const HelperDetailProvider = ({ children }: { children: ReactNode }) => {
-  const { notification } = App.useApp();
+  const { notification, modal } = App.useApp();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [detail, setDetail] = useState<any>(null);
   const { user } = useGetUser();
   const { id } = useParams();
@@ -57,7 +59,20 @@ const HelperDetailProvider = ({ children }: { children: ReactNode }) => {
   }, [id]);
 
   const onOpen = () => {
-    setOpen(true);
+    if (user) {
+      setOpen(true);
+    } else {
+      modal.confirm({
+        title: 'Đăng nhập để tạo hợp đồng!',
+        icon: <ExclamationCircleFilled />,
+        content: 'Bạn vui lòng đăng nhập để tạo hợp đồng',
+        okText: 'Đăng nhập',
+        cancelText: 'Hủy',
+        onOk() {
+          navigate('/app-login');
+        },
+      });
+    }
   };
 
   const onClose = () => {

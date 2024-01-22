@@ -1,6 +1,6 @@
 import { BASE_IMG } from 'constance';
 import { useContractDetailContext } from '../context';
-import { Button, Input, Rate } from 'antd';
+import { Avatar, Button, Input, Rate } from 'antd';
 import { EditOutlined, SendOutlined } from '@ant-design/icons';
 import { useAddress } from 'hooks/address';
 import dayjs from 'dayjs';
@@ -8,7 +8,14 @@ import { CONTRACT_STATUS } from 'constance/contract';
 import ModalContract from '../components/ModalContract';
 
 const UI = () => {
-  const { detail, onOpen, onClickComplete } = useContractDetailContext();
+  const {
+    detail,
+    onOpen,
+    onClickComplete,
+    onChangeRate,
+    onChangeReview,
+    saveReview,
+  } = useContractDetailContext();
   const { getDistrict, getProvince, getWard } = useAddress();
   const getLinkImage = (url: string) => {
     if (!url) return '';
@@ -21,22 +28,26 @@ const UI = () => {
       <div className='flex justify-center py-6'>
         <div className='w-2/3'>
           <div className='flex justify-end mb-6 gap-4'>
-            <Button size='large' onClick={onClickComplete}>
-              Xác nhận hoàn thành
-            </Button>
-            <Button
-              icon={<EditOutlined />}
-              type='primary'
-              size='large'
-              onClick={onOpen}
-            >
-              Chỉnh sửa hợp đồng
-            </Button>
+            {detail?.contract_status === 'complete' ? (
+              <>
+                <Button size='large' onClick={onClickComplete}>
+                  Xác nhận hoàn thành
+                </Button>
+                <Button
+                  icon={<EditOutlined />}
+                  type='primary'
+                  size='large'
+                  onClick={onOpen}
+                >
+                  Chỉnh sửa hợp đồng
+                </Button>
+              </>
+            ) : null}
           </div>
           <div className='flex gap-12'>
             <div>
               <img
-                src={getLinkImage(detail?.profile_picture) || BASE_IMG}
+                src={getLinkImage(detail?.helper?.profile_picture) || BASE_IMG}
                 alt=''
                 className='w-[224px] h-[224px] object-cover rounded-xl'
               />
@@ -122,15 +133,52 @@ const UI = () => {
             <div className='font-semibold text-xl text-slate-500 '>
               Đánh giá
             </div>
-            <Rate className='size-large' />
-            <div className='flex gap-2 items-start'>
-              <Input.TextArea
-                autoSize={{
-                  minRows: 3,
-                }}
-              />
-              <SendOutlined className='text-2xl' />
-            </div>
+            {!detail?.helper?.review || detail?.helper?.review?.length === 0 ? (
+              <>
+                <Rate className='size-large' onChange={onChangeRate} />
+                <div className='flex gap-2 items-start'>
+                  <Input.TextArea
+                    autoSize={{
+                      minRows: 3,
+                    }}
+                    onChange={onChangeReview}
+                  />
+                  <div
+                    className='mt-1 hover:opacity-80 cursor-pointer'
+                    onClick={saveReview}
+                  >
+                    <SendOutlined className='text-2xl text-[#ff5b22]' />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className='rounded-xl shadow-md w-full p-6 flex gap-3 border'>
+                <Avatar
+                  size='large'
+                  src={
+                    getLinkImage(
+                      detail?.helper?.review?.[0]?.user?.profile_picture
+                    ) || BASE_IMG
+                  }
+                >
+                  A
+                </Avatar>
+                <div className='flex flex-col gap-1'>
+                  <div className='font-medium'>
+                    {detail?.helper?.review?.[0]?.user?.full_name || 'User'}
+                  </div>
+                  <Rate value={detail?.helper?.review?.[0]?.rating} disabled />
+                  <div className='text-[#666] text-sm'>
+                    {dayjs(detail?.helper?.review?.[0]?.created_at).format(
+                      'hh:mm DD/MM/YYYY'
+                    )}
+                  </div>
+                  <div className='text-sm mt-4'>
+                    {detail?.helper?.review?.[0]?.comment}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

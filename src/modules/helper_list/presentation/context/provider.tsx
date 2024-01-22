@@ -6,6 +6,9 @@ import { App } from 'antd';
 import { HelperListApi } from 'modules/helper_list/data';
 import { MESSAGE_ERROR } from 'constance';
 import { changeLoading } from 'components/wrapper/slice';
+import { useGetUser } from 'config/hooks/useGetUser';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 const DEFAULT_VALUE = {
   pagination: {
@@ -27,8 +30,10 @@ const splitArray = (array: any[], chunkSize: number) => {
 const api = new HelperListApi();
 
 const HelperListProvider = ({ children }: { children: ReactNode }) => {
-  const { notification } = App.useApp();
+  const { notification, modal } = App.useApp();
   const dispatch = useDispatch();
+  const { user } = useGetUser();
+  const navigate = useNavigate();
   const [pagination, setPagination] = useState(DEFAULT_VALUE.pagination);
   const { address } = useSelector((state: RootState) => state.wrapper);
   const [districts, setDistricts] = useState<any[]>([]);
@@ -56,17 +61,21 @@ const HelperListProvider = ({ children }: { children: ReactNode }) => {
         });
       }
     })();
+  }, []);
 
-    (async () => {
-      try {
-        const response = await api.getListRecommend();
-        setDataRecommend(splitArray(response.results, 4));
-      } catch (error: any) {
-        notification.error({
-          message: error?.response?.data?.error ?? MESSAGE_ERROR,
-        });
-      }
-    })();
+  useEffect(() => {
+    if (user) {
+      (async () => {
+        try {
+          const response = await api.getListRecommend();
+          setDataRecommend(splitArray(response.results, 4));
+        } catch (error: any) {
+          notification.error({
+            message: error?.response?.data?.error ?? MESSAGE_ERROR,
+          });
+        }
+      })();
+    }
   }, []);
 
   useEffect(() => {

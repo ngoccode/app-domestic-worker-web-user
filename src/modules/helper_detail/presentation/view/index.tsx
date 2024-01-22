@@ -6,9 +6,11 @@ import { useHelperDetailContext } from '../context';
 import { BASE_IMG } from 'constance';
 import { useAddress } from 'hooks/address';
 import dayjs from 'dayjs';
+import { useGetUser } from 'config/hooks/useGetUser';
 
 const UI = () => {
-  const { detail, open, onOpen } = useHelperDetailContext();
+  const { detail, onOpen } = useHelperDetailContext();
+  const { user } = useGetUser();
   const { getDistrict, getProvince, getWard } = useAddress();
 
   const getLinkImage = (url: string) => {
@@ -30,7 +32,7 @@ const UI = () => {
                 {detail?.full_name ?? ''}
               </div>
             </div>
-            {detail?.contract ? null : (
+            {!detail?.contract ? (
               <Button
                 className='!rounded-full !px-6'
                 type='primary'
@@ -39,6 +41,10 @@ const UI = () => {
               >
                 Tạo hợp đồng
               </Button>
+            ) : (
+              <div className='text-violet-600 font-semibold text-lg'>
+                Hợp đồng đã được tạo
+              </div>
             )}
           </div>
           <div className='flex gap-12 items-center'>
@@ -110,7 +116,7 @@ const UI = () => {
                     <li>Dọn dẹp nhà cửa</li>
                     <li> Chăm người già</li>
                     <li>Đi chợ</li>
-                  </ul>
+                  </ul> 
                 </li>
                 <li>
                   <div className='font-medium'>

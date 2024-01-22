@@ -14,7 +14,7 @@ class ContractDetailApi {
   }
 
   async createReview(payload: any) {
-    const url = '/contract/review';
+    const url = '/review/create';
     const response = await axiosConfig.post(url, payload);
     return response.data;
   }

@@ -2,7 +2,7 @@ import axiosConfig from 'config';
 
 class HelperListApi {
   async getListUser(params: any) {
-    const url = '/user/list';
+    const url = '/user/helper/list';
     const response = await axiosConfig.get(url, { params });
     return response.data;
   }

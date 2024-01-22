@@ -69,6 +69,14 @@ const RegisterForm = () => {
                     required: true,
                     message: 'Vui lòng nhập số điện thoại!',
                   },
+                  {
+                    min: 10,
+                    message: 'Số điện thoại cần có từ 10 kí tự số!',
+                  },
+                  {
+                    pattern: /^[0-9]/,
+                    message: 'Số điện thoại phải là số!',
+                  },
                 ]}
               >
                 <Input size='large' maxLength={20} minLength={10} />
@@ -168,6 +176,7 @@ const RegisterForm = () => {
                 size='large'
                 value={password}
                 onChange={onChangeInput(setPassword)}
+                autoComplete='new-password'
               />
             </Item>
           </div>

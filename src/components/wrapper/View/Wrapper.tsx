@@ -41,10 +41,11 @@ const WrapperUI = ({ children }: { children: React.ReactNode }) => {
     {
       key: '1',
       icon: <UserOutlined />,
-      label: 'Profile',
+      label: 'Tài khoản',
+      onClick: onChangePage('/app-profile'),
     },
     {
-      key: '1',
+      key: '2',
       icon: <FileTextOutlined />,
       label: 'Hợp đồng',
       onClick: () => navigate('/app-contract'),
@@ -125,7 +126,7 @@ const WrapperUI = ({ children }: { children: React.ReactNode }) => {
                 >
                   Về chúng tôi
                 </div>
-                <div
+                {/* <div
                   className={combineClass(
                     'cursor-pointer hover:text-[#FF5B22]',
                     handleClassActive(Location.suggest)
@@ -142,7 +143,7 @@ const WrapperUI = ({ children }: { children: React.ReactNode }) => {
                   onClick={onChangePage(Location.service)}
                 >
                   Dịch vụ
-                </div>
+                </div> */}
                 <div
                   className={combineClass(
                     'cursor-pointer hover:text-[#FF5B22]',

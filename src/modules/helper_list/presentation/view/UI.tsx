@@ -5,10 +5,12 @@ import { useAddress } from 'hooks/address';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import { BASE_IMG } from 'constance';
+import { useGetUser } from 'config/hooks/useGetUser';
 
 const UI = () => {
   const { pagination, onChangePagination, data, dataRecommend } =
     useHelperListContext();
+  const { user } = useGetUser();
   const { getProvince } = useAddress();
   const navigate = useNavigate();
 
@@ -98,7 +100,7 @@ const UI = () => {
             <Empty description='Không tìm thấy người giúp việc' />
           </div>
         )}
-        {dataRecommend?.length > 0 && (
+        {dataRecommend?.length > 0 && user && (
           <div className='flex flex-col gap-4 mb-24'>
             <div className='font-bold color text-slate-600'>Gợi ý cho bạn</div>
             <Carousel autoplay>
@@ -140,8 +142,16 @@ const UI = () => {
                             </li>
                           </ul>
                           <div className='flex items-center justify-between mt-2'>
-                            <Rate value={4} />
-                            <div className='text-xs'>55 lượt đánh giá</div>
+                            {item?.review?.length > 0 ? (
+                              <>
+                                <Rate value={countRate(item?.review)} />
+                                <div className='text-xs'>
+                                  {item?.review?.length} lượt đánh giá
+                                </div>
+                              </>
+                            ) : (
+                              <div className='text-xs'>Chưa có đánh giá</div>
+                            )}
                           </div>
                         </div>
                       );

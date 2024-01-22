@@ -151,6 +151,51 @@ const ContractDetailProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  const [rate, setRate] = useState(0);
+  const [review, setReview] = useState('');
+
+  const onChangeRate = (rate: any) => {
+    setRate(rate);
+  };
+  const onChangeReview = (e: any) => {
+    setReview(e.target.value);
+  };
+
+  const saveReview = async () => {
+    try {
+      dispatch(changeLoading(true));
+      const res = await api.createReview({
+        user_id: user?.user_id,
+        helper_id: detail?.helper?.user_id,
+        rating: rate,
+        comment: review,
+      });
+      setDetail((cur: any) => {
+        return {
+          ...cur,
+          helper: {
+            ...cur.helper,
+            review: {
+              user: user,
+              helper_id: detail?.helper?.user_id,
+              rating: rate,
+              comment: review,
+            },
+          },
+        };
+      });
+      notification.success({
+        message: 'Đánh giá thành công!',
+      });
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data?.error ?? MESSAGE_ERROR,
+      });
+    } finally {
+      dispatch(changeLoading(false));
+    }
+  };
+
   const value = {
     detail,
     open,
@@ -164,6 +209,9 @@ const ContractDetailProvider = ({ children }: { children: ReactNode }) => {
     onChangeFilter,
     onUpdate,
     onClickComplete,
+    onChangeRate,
+    onChangeReview,
+    saveReview,
   };
   return (
     <ContractDetailContext.Provider value={value}>

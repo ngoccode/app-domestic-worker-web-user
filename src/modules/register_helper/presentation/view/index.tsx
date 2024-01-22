@@ -104,7 +104,15 @@ const UI = () => {
                 </div>
                 <div className='flex flex-col gap-1'>
                   <div className='font-medium'>Ngày tháng năm sinh</div>
-                  <Item name='date_of_birth'>
+                  <Item
+                    name='date_of_birth'
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng không bỏ qua!',
+                      },
+                    ]}
+                  >
                     <DatePicker
                       size='large'
                       className='!w-full'
@@ -143,7 +151,16 @@ const UI = () => {
                 <div className='flex flex-col gap-1'>
                   <div className='font-medium'>Địa chỉ</div>
                   <div className='flex gap-3'>
-                    <Item name={'province'} className='!w-1/3'>
+                    <Item
+                      name={'province'}
+                      className='!w-1/3'
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Vui lòng không bỏ qua!',
+                        },
+                      ]}
+                    >
                       <Select
                         options={optionsAddress(province)}
                         placeholder='Tỉnh hoặc thành phố'
@@ -158,7 +175,16 @@ const UI = () => {
                         }
                       />
                     </Item>
-                    <Item name={'district'} className='!w-1/3'>
+                    <Item
+                      name={'district'}
+                      className='!w-1/3'
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Vui lòng không bỏ qua!',
+                        },
+                      ]}
+                    >
                       <Select
                         options={optionsAddress(districts)}
                         placeholder='Huyện hoặc quận'
@@ -173,7 +199,16 @@ const UI = () => {
                         }
                       />
                     </Item>
-                    <Item name={'ward'} className='!w-1/3'>
+                    <Item
+                      name={'ward'}
+                      className='!w-1/3'
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Vui lòng không bỏ qua!',
+                        },
+                      ]}
+                    >
                       <Select
                         options={optionsAddress(wards)}
                         placeholder='Xã phường'
@@ -192,7 +227,15 @@ const UI = () => {
                 </div>
                 <div className='flex flex-col gap-1'>
                   <div className='font-medium'>Giới tính</div>
-                  <Item name='gender'>
+                  <Item
+                    name='gender'
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng không bỏ qua!',
+                      },
+                    ]}
+                  >
                     <Select
                       size='large'
                       options={[
@@ -210,19 +253,43 @@ const UI = () => {
                 </div>
                 <div className='flex flex-col gap-1'>
                   <div className='font-medium'>Hình thức làm việc</div>
-                  <Item name='working_form'>
+                  <Item
+                    name='working_form'
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng không bỏ qua!',
+                      },
+                    ]}
+                  >
                     <Select size='large' options={OPTION_WORKING} />
                   </Item>
                 </div>
                 <div className='flex flex-col gap-1'>
                   <div className='font-medium'>Thời gian kinh nghiệm</div>
-                  <Item name='experience'>
+                  <Item
+                    name='experience'
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng không bỏ qua!',
+                      },
+                    ]}
+                  >
                     <Select size='large' options={optionYear} />
                   </Item>
                 </div>
                 <div className='flex flex-col gap-1'>
                   <div className='font-medium'>Kinh nghiệm làm việc</div>
-                  <Item name='categories'>
+                  <Item
+                    name='categories'
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng không bỏ qua!',
+                      },
+                    ]}
+                  >
                     <Select
                       options={options}
                       placeholder='Việc cần làm'
@@ -234,7 +301,15 @@ const UI = () => {
                 </div>
                 <div className='flex flex-col gap-1'>
                   <div className='font-medium'>Tiểu sử</div>
-                  <Item name='biography'>
+                  <Item
+                    name='biography'
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng không bỏ qua!',
+                      },
+                    ]}
+                  >
                     <Input.TextArea autoSize={{ minRows: 4 }} size='large' />
                   </Item>
                 </div>
