@@ -1,6 +1,8 @@
 import { createContext } from 'react';
 
-type WrapperContextValue = {};
+type WrapperContextValue = {
+  onLogout: () => void;
+};
 
 const WrapperContext = createContext<WrapperContextValue | null>(null);
 

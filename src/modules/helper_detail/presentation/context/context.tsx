@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-type HelperDetailContextValue = {};
+type HelperDetailContextValue = any;
 
 const HelperDetailContext = createContext<HelperDetailContextValue | null>(
   null

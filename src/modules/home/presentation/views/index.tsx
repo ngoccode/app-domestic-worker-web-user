@@ -1,8 +1,15 @@
 import { Button, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Icon from 'components/Icon/Icon';
+import { useNavigate } from 'react-router-dom';
 
 const UI = () => {
+  const navigate = useNavigate();
+  const changePage = (page: string) => {
+    return () => {
+      navigate(page);
+    };
+  };
   return (
     <div className='flex flex-col items-center mt-24'>
       <div className='uppercase text-4xl font-bold'>Welcome to website</div>
@@ -54,7 +61,11 @@ const UI = () => {
             Nếu bạn đang muốn tìm công việc giúp việc cho gia đình, hẫy đăng ký
             với chúng tôi để tìm kiếm được công việc ưng ý.
           </div>
-          <Button className='!text-[#FF852C] !rounded-full' size='large'>
+          <Button
+            className='!text-[#FF852C] !rounded-full'
+            size='large'
+            onClick={changePage('/app-helper-register')}
+          >
             Đăng ký cộng tác viên
           </Button>
         </div>

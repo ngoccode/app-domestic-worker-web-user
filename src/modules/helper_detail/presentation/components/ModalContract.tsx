@@ -1,23 +1,32 @@
-import { Modal, Form, Input, Select, Button } from 'antd';
+import { Modal, Form, Input, Select, Button, DatePicker } from 'antd';
+import { useHelperDetailContext } from '../context';
+import { useMapAddress } from 'hooks/useMapAddress';
 
 const { Item } = Form;
 
-type ModalContractProps = {
-  open?: boolean;
-};
-
-const options = [
+const OPTION_WORKING = [
   {
-    label: 'option1',
-    value: 'option1',
+    label: 'Toàn thời gian',
+    value: 'full_time',
+  },
+  {
+    label: 'Bán thời gian',
+    value: 'past_time',
   },
 ];
 
-const ModalContract = ({ open = false }: ModalContractProps) => {
-  const onCancel = () => {
-    console.log('click');
-    open = false;
-  };
+const ModalContract = () => {
+  const {
+    open,
+    province,
+    districts,
+    options,
+    wards,
+    onClose,
+    onChangeFilter,
+    onCreate,
+  } = useHelperDetailContext();
+  const { optionsAddress } = useMapAddress();
   return (
     <Modal
       width={'55%'}
@@ -25,79 +34,91 @@ const ModalContract = ({ open = false }: ModalContractProps) => {
       title={null}
       closeIcon={null}
       footer={null}
-      onCancel={onCancel}
+      onCancel={onClose}
     >
       <div className='px-6 py-2'>
-        <div className='font-medium text-[#FF852C] text-lg mb-8'>
+        <div className='font-medium text-[#FF852C] text-xl mb-8'>
           Thông tin hợp đồng
         </div>
-        <Form name='contract'>
+        <Form
+          name='contract'
+          onValuesChange={onChangeFilter}
+          onFinish={onCreate}
+        >
           <div className='flex flex-col gap-4 '>
             <div className='flex flex-col gap-1'>
               <div className='font-medium'>Mức lương đề xuất</div>
-              <Item>
-                <Input size='large' />
+              <Item name='salary'>
+                <Input size='large' type='number' />
               </Item>
             </div>
             <div className='flex flex-col gap-1'>
               <div className='font-medium'>Địa chỉ làm việc</div>
               <div className='flex flex-col gap-3'>
                 <div className='flex gap-3'>
-                  <Item name={['address', 'province']} className='!w-1/3'>
+                  <Item name='province' className='!w-1/3'>
                     <Select
-                      options={options}
+                      options={optionsAddress(province)}
                       placeholder='Tỉnh hoặc thành phố'
                       className='!w-full'
                       size='large'
                     />
                   </Item>
-                  <Item name={['address', 'district']} className='!w-1/3'>
+                  <Item name='district' className='!w-1/3'>
                     <Select
-                      options={options}
+                      options={optionsAddress(districts)}
                       placeholder='Huyện hoặc quận'
                       className='!w-full'
                       size='large'
                     />
                   </Item>
-                  <Item name={['address', 'ward']} className='!w-1/3'>
+                  <Item name='ward' className='!w-1/3'>
                     <Select
-                      options={options}
+                      options={optionsAddress(wards)}
                       placeholder='Xã phường'
                       className='!w-full'
                       size='large'
                     />
                   </Item>
                 </div>
-                <Item>
+                <Item name='address'>
                   <Input size='large' placeholder='Địa chỉ chi tiết' />
                 </Item>
               </div>
             </div>
             <div className='flex flex-col gap-1'>
+              <div className='font-medium'>Thời gian kết thúc</div>
+              <Item name='time_end'>
+                <DatePicker size='large' className='!w-full' placeholder='' />
+              </Item>
+            </div>
+            <div className='flex flex-col gap-1'>
               <div className='font-medium'>Hình thức làm việc</div>
-              <Item>
+              <Item name='working_form'>
                 <Select
-                  options={options}
-                  placeholder='Xã phường'
+                  options={OPTION_WORKING}
+                  placeholder=''
                   className='!w-full'
                   size='large'
                 />
               </Item>
             </div>
+
             <div className='flex flex-col gap-1'>
               <div className='font-medium'>Việc cần làm</div>
-              <Item>
+              <Item name='categories'>
                 <Select
                   options={options}
-                  placeholder='Xã phường'
+                  placeholder=''
                   className='!w-full'
                   size='large'
+                  mode='multiple'
                 />
               </Item>
             </div>
             <div className='flex flex-col gap-1'>
               <div className='font-medium'>Việc cần làm</div>
-              <Item>
+              <Item name='description'>
                 <Input.TextArea size='large' autoSize={{ minRows: 3 }} />
               </Item>
             </div>
@@ -105,11 +126,16 @@ const ModalContract = ({ open = false }: ModalContractProps) => {
               <Button
                 size='large'
                 type='primary'
+                htmlType='submit'
                 className='!px-8 !rounded-full'
               >
                 Gửi
               </Button>
-              <Button size='large' className='!px-6 !rounded-full'>
+              <Button
+                size='large'
+                className='!px-6 !rounded-full'
+                onClick={onClose}
+              >
                 Thoát
               </Button>
             </div>
